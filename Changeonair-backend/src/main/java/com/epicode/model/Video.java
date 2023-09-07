@@ -32,5 +32,6 @@ public class Video {
 	private int likeCount;
 	private Long visualizzazioni;
 	private String url;
+	private String organizzazione;
 
 }

@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,48 +19,36 @@ import com.epicode.repositories.VideoRepository;
 
 @Service
 public class VideoService {
-
-	@Value("${uploadDirectory}")
-    private String uploadDirectory;
 	
-	@Autowired
-    private VideoRepository repo;
-	
+	@Autowired VideoRepository repo;
 	@Autowired @Qualifier("videoBean") private ObjectProvider<Video> videoProvider;
 	
-	public void uploadVideo(MultipartFile file) throws IOException {
-        if (!file.isEmpty()) {
-            
-            String videoFileName = generateUniqueFileName(file.getOriginalFilename());
+	
+	public Video creaVideo(String nome, String descrizione, String url, String organizzazione, Long visualizzazioni, Date dataCaricamento) {
+		Video v = videoProvider.getObject();
+		v.setNome(nome);
+		v.setDescrizione(descrizione);
+		v.setUrl(url);
+		v.setOrganizzazione(organizzazione);
+		v.setVisualizzazioni(visualizzazioni);
+		v.setDataCaricamento(dataCaricamento);
+		repo.save(v);
+		return v;
+	}
+	
+	public List<Video> getAllVideo() {
+		List<Video> lista = repo.findAll();
+		for (Video video : lista) {
+			
+		}
+		return lista;
+	}
+	
+	public Optional<Video> getVideoById(Long id) {
+		Optional<Video> v = repo.findById(id);
+		return v;
+	}
 
-            
-            Path videoFilePath = Paths.get(uploadDirectory, videoFileName);
-
-            
-            file.transferTo(videoFilePath);
-
-            
-            Video video = videoProvider.getObject();
-            video.setNome(file.getOriginalFilename());
-            video.setDataCaricamento(new Date());
-            
-
-            repo.save(video);
-        } else {
-            throw new IllegalArgumentException("Il file video è vuoto.");
-        }
-    }
-
-    
-    private String generateUniqueFileName(String originalFileName) {
-        
-        long timestamp = new Date().getTime();
-        return timestamp + "_" + originalFileName;
-    }
-    
-    public List<Video> getAllVideos() {
-        
-        return repo.findAll();
-    }
+	
 }
 

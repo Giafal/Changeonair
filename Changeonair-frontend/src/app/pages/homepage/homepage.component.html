@@ -1,0 +1,4 @@
+<div *ngFor="let video of videos">
+  <h3>{{ video.nome }}</h3>
+  <video [src]="video.url" controls></video>
+</div>

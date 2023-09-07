@@ -11,13 +11,19 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.web.multipart.MultipartFile;
  
 public class FileUploadUtil {
-    public static String saveFile(String fileName, MultipartFile multipartFile)
+	
+
+    
+	
+	public static String saveFile(String fileName, MultipartFile multipartFile)
             throws IOException {
-        Path uploadPath = Paths.get("Files-Upload");
+        Path uploadPath = Paths.get("src/main/resources/upload");
           
         if (!Files.exists(uploadPath)) {
             Files.createDirectories(uploadPath);
         }
+        
+        
  
         String fileCode = RandomStringUtils.randomAlphanumeric(8);
          
