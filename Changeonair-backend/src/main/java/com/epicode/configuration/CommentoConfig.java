@@ -10,7 +10,7 @@ import com.epicode.model.Commento;
 public class CommentoConfig {
    
 	 @Bean("commentoBean")
-	 @Scope("singleton")
+	 @Scope("prototype")
 	 public Commento commento() {
 		 return new Commento();
 	 }

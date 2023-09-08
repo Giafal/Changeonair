@@ -1,21 +1,23 @@
 package com.epicode.services;
 
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
+
 
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
+
 
 import com.epicode.model.Video;
 import com.epicode.repositories.VideoRepository;
+import com.epicode.security.entity.User;
+
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class VideoService {
@@ -24,7 +26,7 @@ public class VideoService {
 	@Autowired @Qualifier("videoBean") private ObjectProvider<Video> videoProvider;
 	
 	
-	public Video creaVideo(String nome, String descrizione, String url, String organizzazione, Long visualizzazioni, Date dataCaricamento) {
+	public Video creaVideo(String nome, String descrizione, String url, String organizzazione, Long visualizzazioni, Date dataCaricamento, User utente) {
 		Video v = videoProvider.getObject();
 		v.setNome(nome);
 		v.setDescrizione(descrizione);
@@ -32,6 +34,7 @@ public class VideoService {
 		v.setOrganizzazione(organizzazione);
 		v.setVisualizzazioni(visualizzazioni);
 		v.setDataCaricamento(dataCaricamento);
+		v.setUtente(utente);
 		repo.save(v);
 		return v;
 	}
@@ -44,10 +47,46 @@ public class VideoService {
 		return lista;
 	}
 	
-	public Optional<Video> getVideoById(Long id) {
-		Optional<Video> v = repo.findById(id);
+	public Video getVideoById(Long id) {
+		if(!repo.existsById(id)) {
+			throw new EntityNotFoundException("Video doesn't exists!!!");
+		}
+		Video v = repo.findById(id).get();
 		return v;
 	}
+	
+	public List<Video> getByName(String name) {
+		List<Video> lista = repo.findByNome(name);
+		return lista;
+	}
+	
+	public List<Video> getByUtente(String nomeUtente) {
+		List<Video> lista = repo.findByUtente(nomeUtente);
+		return lista;
+	}
+	
+	public String deleteVideo(Long id) {
+		if(!repo.existsById(id)) {
+			throw new EntityNotFoundException("Video doesn't exists!!!");
+		}
+		Video v = getVideoById(id);
+		repo.delete(v);
+		return "Video deleted!!";
+		
+	}
+	
+	public Video updateVideo(Long id, Video video) {
+		if(!repo.existsById(id)) {
+			throw new EntityNotFoundException("Video doesn't exists!!!");
+		}
+		if(id != video.getId()) {
+			throw new EntityNotFoundException("Id and ContactID do not match!");
+		}
+		return  repo.save(video);
+		
+	}
+	
+	
 
 	
 }

@@ -3,7 +3,7 @@ package com.epicode.controller;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
+
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,22 +12,33 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+
 import org.springframework.web.multipart.MultipartFile;
 
 import com.epicode.model.Video;
 import com.epicode.payload.FileUploadResponse;
+import com.epicode.security.entity.User;
+import com.epicode.security.repository.UserRepository;
 import com.epicode.services.VideoService;
 import com.epicode.util.FileDownloadUtil;
 import com.epicode.util.FileUploadUtil;
+
+
 
 @RestController
 @RequestMapping("/api/videos")
@@ -35,16 +46,28 @@ import com.epicode.util.FileUploadUtil;
 public class VideoController {
 	
 	@Autowired VideoService svc;
+	@Autowired UserRepository userRepository;
 	
 	@PostMapping("/uploadFile")
     public ResponseEntity<FileUploadResponse> uploadFile(
-            @RequestParam("file") MultipartFile multipartFile)
+            @RequestParam("file") MultipartFile multipartFile
+            
+           )
                     throws IOException {
          
         String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
         long size = multipartFile.getSize();
          
         String filecode = FileUploadUtil.saveFile(fileName, multipartFile);
+        
+        
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserEmail = authentication.getName();
+        
+        
+        
+        User user = userRepository.findByEmail(currentUserEmail);
+        
         
         
          
@@ -58,7 +81,8 @@ public class VideoController {
   		      "http://localhost:8080/api/videos" + response.getDownloadUri(), 
   		      "", 
   		      0l,
-  		      new Date());
+  		      new Date(),
+  		      user);
          
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -70,9 +94,21 @@ public class VideoController {
 	}
 	
 	@GetMapping("/getVideos/{id}")
-	public ResponseEntity<Optional<Video>> getVideo(@PathVariable Long id) {
-		Optional<Video> v = svc.getVideoById(id);
-		return new ResponseEntity<Optional<Video>>(v, HttpStatus.OK);
+	public ResponseEntity<Video> getVideo(@PathVariable Long id) {
+		Video v = svc.getVideoById(id);
+		return new ResponseEntity<Video>(v, HttpStatus.OK);
+	}
+	
+	@GetMapping("/getVideos/{nome}")
+	public ResponseEntity<List<Video>> getByName(@PathVariable String nome) {
+		List<Video> lista = svc.getByName(nome);
+		return new ResponseEntity<List<Video>>(lista, HttpStatus.OK);
+	}
+	
+	@GetMapping("/getVideos/{nomeUtente}")
+	public ResponseEntity<List<Video>> getByUtente(@PathVariable String nomeUtente) {
+		List<Video> lista = svc.getByUtente(nomeUtente);
+		return new ResponseEntity<List<Video>>(lista, HttpStatus.OK);
 	}
 	
 	@GetMapping("/downloadFile/{fileCode}")
@@ -91,6 +127,7 @@ public class VideoController {
         }
          
         String contentType = "application/octet-stream";
+        
         String headerValue = "attachment; filename=\"" + resource.getFilename() + "\"";
          
         return ResponseEntity.ok()
@@ -98,6 +135,18 @@ public class VideoController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, headerValue)
                 .body(resource);       
     }
+	
+	@DeleteMapping("/deleteVideo/{id}")
+	public ResponseEntity<String> deleteVideo(@PathVariable Long id) {
+		String msg = svc.deleteVideo(id);
+		return new ResponseEntity<String>(msg, HttpStatus.OK);
+	}
+	
+	@PutMapping("/updateVideo/{id}")
+	public ResponseEntity<?> updateVideo(@PathVariable Long id, @RequestBody Video video) {
+		Video v = svc.updateVideo(id, video);
+		return new ResponseEntity<Video>(v, HttpStatus.OK);
+	}
 }
 
     

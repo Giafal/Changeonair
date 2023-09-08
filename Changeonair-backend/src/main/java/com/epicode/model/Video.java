@@ -3,12 +3,18 @@ package com.epicode.model;
 import java.util.Date;
 import java.util.List;
 
+import com.epicode.security.entity.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,12 +32,18 @@ public class Video {
 	private String descrizione;
 	private Date dataCaricamento;
 	@OneToMany(mappedBy = "video", cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<Video_like> likes;
 	@OneToMany(mappedBy = "video", cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<Commento> commenti;
 	private int likeCount;
 	private Long visualizzazioni;
 	private String url;
 	private String organizzazione;
+	@ManyToOne
+	@JoinColumn(name = "utente_id")
+	@JsonIgnore
+	private User utente;
 
 }
