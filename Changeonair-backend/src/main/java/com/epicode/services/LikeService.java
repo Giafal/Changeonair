@@ -1,5 +1,7 @@
 package com.epicode.services;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -26,6 +28,7 @@ public class LikeService {
         Video_like like = likeProvider.getObject();
         like.setVideo(video);
         like.setUtente(utente);
+        like.setDataLike(new Date());
         repo.save(like);
         
         video.setLikeCount(video.getLikeCount() + 1);

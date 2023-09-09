@@ -1,0 +1,67 @@
+<div class="container">
+  <h1 class="my-5 text-center">Register Page</h1>
+  <form #f="ngForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <input
+        type="text"
+        class="form-control"
+        id="name"
+        ngModel
+        name="name"
+        placeholder="Inserisci il tuo nome..."
+      />
+    </div>
+    <div class="mb-3">
+      <input
+        type="text"
+        class="form-control"
+        id="creditCard"
+        ngModel
+        name="lastname"
+        placeholder="Inserisci il tuo cognome..."
+      />
+    </div>
+    <div class="mb-3">
+      <input
+        type="text"
+        class="form-control"
+        id="username"
+        ngModel
+        name="username"
+        placeholder="Inserisci il tuo username..."
+        required
+      />
+    </div>
+    <div class="mb-3">
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        ngModel
+        name="email"
+        placeholder="Inserisci la tua email..."
+        required
+      />
+    </div>
+    <div class="mb-3">
+      <input
+        type="password"
+        class="form-control"
+        id="password"
+        ngModel
+        name="password"
+        placeholder="Inserisci una password..."
+        required
+      />
+    </div>
+    <div class="d-grid gap-2">
+      <button class="btn btn-primary" type="submit">Registrati</button>
+    </div>
+  </form>
+  <div class="mt-3">
+    <p>Già registrato? <a [routerLink]="['/login']">Log in</a></p>
+  </div>
+  <div class="alert alert-danger my-3" role="alert" *ngIf="error">
+    {{ error }}
+  </div>
+</div>

@@ -1,0 +1,37 @@
+<div class="container">
+  <h1 class="my-5 text-center">Login Page</h1>
+  <form #f="ngForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <input
+        type="text"
+        ngModel
+        class="form-control"
+        id="username"
+        name="username"
+        placeholder="Inserisci il tuo username..."
+        required
+      />
+    </div>
+    <div class="mb-3">
+      <input
+        type="password"
+        ngModel
+        class="form-control"
+        id="password"
+        name="password"
+        placeholder="Inserisci la tua password..."
+        required
+      />
+    </div>
+    <div class="d-grid gap-2">
+      <button class="btn btn-primary" type="submit">Login</button>
+    </div>
+  </form>
+  <div class="mt-3">
+    <p>Non hai un account? <a [routerLink]="['/register']">Registrati</a></p>
+  </div>
+  <div class="alert alert-danger my-3" role="alert" *ngIf="error">
+    {{ error }}
+  </div>
+</div>
+
