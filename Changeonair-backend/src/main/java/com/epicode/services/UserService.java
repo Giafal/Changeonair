@@ -23,4 +23,10 @@ public class UserService {
 		User u = repo.findById(id).get();
 		return u;
 	}
+
+
+	public User findByUsername(String username) {
+		User u = repo.findByUsername(username);
+		return u;
+	}
 }

@@ -6,10 +6,9 @@ import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
-
   @ViewChild('f') form!: NgForm;
   error: undefined | string;
 
@@ -26,6 +25,7 @@ export class LoginComponent {
           this.error = undefined;
           this.svc.loggedIn = true;
           localStorage.setItem('user', JSON.stringify(resp));
+          localStorage.setItem('userId', JSON.stringify(resp.userId));
           this.router.navigate(['']);
         },
         (err) => {
@@ -39,5 +39,4 @@ export class LoginComponent {
       this.error = 'Field Required';
     }
   }
-
 }

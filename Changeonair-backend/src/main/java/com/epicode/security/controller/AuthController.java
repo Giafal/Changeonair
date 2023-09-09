@@ -1,5 +1,6 @@
 package com.epicode.security.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,16 +9,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.epicode.security.entity.User;
 import com.epicode.security.payload.JWTAuthResponse;
 import com.epicode.security.payload.LoginDto;
 import com.epicode.security.payload.RegisterDto;
 import com.epicode.security.service.AuthService;
+import com.epicode.services.UserService;
 
 
 
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
+	
+	@Autowired UserService userService;
 
     private AuthService authService;
 
@@ -30,8 +35,11 @@ public class AuthController {
     public ResponseEntity<JWTAuthResponse> login(@RequestBody LoginDto loginDto){
            	
     	String token = authService.login(loginDto);
+    	
+    	User u = userService.findByUsername(loginDto.getUsername());
 
         JWTAuthResponse jwtAuthResponse = new JWTAuthResponse();
+        jwtAuthResponse.setUserId(u.getId());
         jwtAuthResponse.setUsername(loginDto.getUsername());
         jwtAuthResponse.setAccessToken(token);
 
