@@ -50,7 +50,11 @@ public class VideoController {
 	
 	@PostMapping("/uploadFile")
     public ResponseEntity<FileUploadResponse> uploadFile(
-            @RequestParam("file") MultipartFile multipartFile
+            @RequestParam("file") MultipartFile multipartFile,
+            @RequestParam("nome") String nome,
+            @RequestParam("descrizione") String descrizione,
+            @RequestParam("organizzazione") String organizzazione
+            
             
            )
                     throws IOException {
@@ -76,10 +80,10 @@ public class VideoController {
         response.setSize(size);
         response.setDownloadUri("/downloadFile/" + filecode);
         
-        svc.creaVideo(fileName, 
-  		      "", 
+        svc.creaVideo(nome, 
+  		      descrizione, 
   		      "http://localhost:8080/api/videos" + response.getDownloadUri(), 
-  		      "", 
+  		      organizzazione, 
   		      0l,
   		      new Date(),
   		      user);

@@ -5,12 +5,14 @@ import { RegisterComponent } from './auth/register/register.component';
 import { LoginComponent } from './auth/login/login.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { AuthGuard } from './auth/auth.guard';
+import { UploadComponent } from './pages/upload/upload.component';
 
 const routes: Routes = [
   { path: '', component: HomepageComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+  { path: 'upload', component: UploadComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({
