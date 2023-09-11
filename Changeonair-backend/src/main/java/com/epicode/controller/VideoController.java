@@ -97,19 +97,19 @@ public class VideoController {
 		return new ResponseEntity<List<Video>>(lista, HttpStatus.OK);
 	}
 	
-	@GetMapping("/getVideos/{id}")
+	@GetMapping("/getVideo/{id}")
 	public ResponseEntity<Video> getVideo(@PathVariable Long id) {
 		Video v = svc.getVideoById(id);
 		return new ResponseEntity<Video>(v, HttpStatus.OK);
 	}
 	
-	@GetMapping("/getVideos/{nome}")
+	@GetMapping("/getVideosByNome/{nome}")
 	public ResponseEntity<List<Video>> getByName(@PathVariable String nome) {
 		List<Video> lista = svc.getByName(nome);
 		return new ResponseEntity<List<Video>>(lista, HttpStatus.OK);
 	}
 	
-	@GetMapping("/getVideos/{nomeUtente}")
+	@GetMapping("/getVideosByUtente/{nomeUtente}")
 	public ResponseEntity<List<Video>> getByUtente(@PathVariable String nomeUtente) {
 		List<Video> lista = svc.getByUtente(nomeUtente);
 		return new ResponseEntity<List<Video>>(lista, HttpStatus.OK);

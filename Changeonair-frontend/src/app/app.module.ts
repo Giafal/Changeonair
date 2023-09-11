@@ -12,6 +12,7 @@ import { RegisterComponent } from './auth/register/register.component';
 import { FormsModule } from '@angular/forms';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { UploadComponent } from './pages/upload/upload.component';
+import { DetailComponent } from './pages/detail/detail.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { UploadComponent } from './pages/upload/upload.component';
     LoginComponent,
     RegisterComponent,
     ProfileComponent,
-    UploadComponent
+    UploadComponent,
+    DetailComponent
   ],
   imports: [
     BrowserModule,

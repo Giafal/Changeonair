@@ -34,17 +34,18 @@ export class UploadComponent {
 
       console.log(this.selectedFile);
       console.log(this.video);
-      console.log(formData);
+      console.log(formData.get('file'));
+      console.log(formData.get('nome'));
+      console.log(formData.get('descrizione'));
+      console.log(formData.get('organizzazione'));
 
       this.svc.creaVideo(formData).subscribe(
         (response) => {
-          // Gestisci la risposta dal backend, ad esempio, mostra un messaggio di successo.
           console.log('File caricato con successo:', response);
           alert('File caricato con successo');
           this.router.navigate(['']);
         },
         (error) => {
-          // Gestisci gli errori, ad esempio, mostra un messaggio di errore.
           console.error('Errore durante il caricamento del file:', error);
         }
       );

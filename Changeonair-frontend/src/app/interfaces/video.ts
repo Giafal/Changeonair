@@ -1,4 +1,5 @@
 export interface Video {
+  id?: number;
   nome: string;
   descrizione: string;
   dataCaricamento?: Date;

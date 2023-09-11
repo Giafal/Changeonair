@@ -10,7 +10,7 @@ import com.epicode.model.Video;
 public class VideoConfig {
         
 	@Bean("videoBean")
-	@Scope("singleton")
+	@Scope("prototype")
 	public Video video() {
 		return new Video();
 	}

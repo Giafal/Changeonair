@@ -1,4 +1,4 @@
 <div *ngFor="let video of videos">
-  <h3>{{ video.nome }}</h3>
+  <a [routerLink]="['/detail', video.id]">{{ video.nome }}</a>
   <video [src]="video.url" controls></video>
 </div>
