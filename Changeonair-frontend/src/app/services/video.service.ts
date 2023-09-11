@@ -31,4 +31,17 @@ export class VideoService {
       return '';
     }
   }
+
+  getVideoByUtente(userId: number): Observable<Video[]> {
+    this.headers = this.headers.set(
+      'Authorization',
+      'Bearer ' + this.getToken()
+    );
+    return this.http.get<Video[]>(
+      `${this.apiUrl}/getVideosByUtente/${userId}`,
+      {
+        headers: this.headers,
+      }
+    );
+  }
 }

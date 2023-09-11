@@ -26,6 +26,7 @@ export class LoginComponent {
           this.svc.loggedIn = true;
           localStorage.setItem('user', JSON.stringify(resp));
           localStorage.setItem('userId', JSON.stringify(resp.userId));
+          localStorage.setItem('userName', JSON.stringify(resp.username));
           this.router.navigate(['']);
         },
         (err) => {

@@ -1,3 +1,8 @@
+<div>
+  <input [(ngModel)]="nome" placeholder="Cerca video per nome" />
+  <button (click)="searchVideos(nome)">Cerca</button>
+</div>
+
 <div *ngFor="let video of videos">
   <a [routerLink]="['/detail', video.id]">{{ video.nome }}</a>
   <video [src]="video.url" controls></video>

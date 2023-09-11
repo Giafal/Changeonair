@@ -4,15 +4,18 @@ import { Video } from '../interfaces/video';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class HomeService {
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
-
-  private apiUrl = "http://localhost:8080/api/videos";
+  private apiUrl = 'http://localhost:8080/api/videos';
 
   getVideos(): Observable<Video[]> {
     return this.http.get<Video[]>(`${this.apiUrl}/getVideos`);
+  }
+
+  getVideosByName(nome: string): Observable<Video[]> {
+    return this.http.get<Video[]>(`${this.apiUrl}/getVideosByNome/${nome}`);
   }
 }

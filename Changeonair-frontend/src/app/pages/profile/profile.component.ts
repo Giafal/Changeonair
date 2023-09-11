@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/interfaces/user';
+import { Video } from 'src/app/interfaces/video';
 import { ProfileService } from 'src/app/services/profile.service';
+import { VideoService } from 'src/app/services/video.service';
 
 @Component({
   selector: 'app-profile',
@@ -8,7 +10,7 @@ import { ProfileService } from 'src/app/services/profile.service';
   styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
-  constructor(private svc: ProfileService) {}
+  constructor(private svc: ProfileService, private videoSvc: VideoService) {}
 
   userData: User = {
     name: '',
@@ -19,9 +21,13 @@ export class ProfileComponent implements OnInit {
   };
 
   id: string = '';
+  userId: number = 0;
+
+  videos: Video[] = [];
 
   ngOnInit(): void {
     this.getUserData(this.id);
+    this.getUserVideo(this.userId);
   }
 
   getUserData(id: string): void {
@@ -31,6 +37,16 @@ export class ProfileComponent implements OnInit {
     }),
       (err: { error: { message: any } }) => {
         console.log(err.error.message);
+      };
+  }
+
+  getUserVideo(userId: number): void {
+    userId = JSON.parse(localStorage.getItem('userId')!);
+    this.videoSvc.getVideoByUtente(userId).subscribe((data) => {
+      this.videos = data;
+    }),
+      (err: any) => {
+        console.log(err);
       };
   }
 }

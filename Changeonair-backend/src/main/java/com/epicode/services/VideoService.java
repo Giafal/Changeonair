@@ -55,13 +55,13 @@ public class VideoService {
 		return v;
 	}
 	
-	public List<Video> getByName(String name) {
-		List<Video> lista = repo.findByNome(name);
+	public List<Video> getByName(String nome) {
+		List<Video> lista = repo.getByNome(nome);
 		return lista;
 	}
 	
-	public List<Video> getByUtente(String nomeUtente) {
-		List<Video> lista = repo.findByUtente(nomeUtente);
+	public List<Video> getByUtente(Long idUtente) {
+		List<Video> lista = repo.findByUtente(idUtente);
 		return lista;
 	}
 	
