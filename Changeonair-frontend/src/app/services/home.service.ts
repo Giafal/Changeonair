@@ -18,4 +18,16 @@ export class HomeService {
   getVideosByName(nome: string): Observable<Video[]> {
     return this.http.get<Video[]>(`${this.apiUrl}/getVideosByNome/${nome}`);
   }
+
+  getVideosByUsername(username: string): Observable<Video[]> {
+    return this.http.get<Video[]>(
+      `${this.apiUrl}/getVideosByUsernameUtente/${username}`
+    );
+  }
+
+  getUsername(userId: number): Observable<string> {
+    return this.http.get<string>(
+      `http://localhost:8080/api/user/getUsernameById/${userId}`
+    );
+  }
 }

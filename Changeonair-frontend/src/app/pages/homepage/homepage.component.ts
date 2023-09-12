@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { forkJoin, map } from 'rxjs';
 import { Video } from 'src/app/interfaces/video';
 import { HomeService } from 'src/app/services/home.service';
 
@@ -18,14 +19,38 @@ export class HomepageComponent implements OnInit {
     this.getVideos();
   }
 
+  // getVideos(): void {
+  //   this.svc.getVideos().subscribe((videos) => (this.videos = videos));
+  // }
+
   getVideos(): void {
-    this.svc.getVideos().subscribe((videos) => (this.videos = videos));
+    this.svc.getVideos().subscribe((videos) => {
+      // Per ogni video, otteni lo username dell'utente
+      console.log(videos);
+      const requests = videos.map((video) =>
+        this.svc.getUsername(video.utente!).pipe(
+          map((username) => {
+            video.username = username;
+            console.log(username);
+            return video;
+          })
+        )
+      );
+
+      // Usa forkJoin per attendere tutte le richieste
+      forkJoin(requests).subscribe((videosWithUsername) => {
+        this.videos = videosWithUsername;
+      });
+    });
   }
 
   searchVideos(nome: string): void {
     nome = this.nome;
-    this.svc
-      .getVideosByName(nome)
-      .subscribe((videos) => (this.videos = videos));
+    forkJoin([
+      this.svc.getVideosByName(nome),
+      this.svc.getVideosByUsername(nome),
+    ]).subscribe(([videosByName, videosByUsername]) => {
+      this.videos = [...videosByName, ...videosByUsername];
+    });
   }
 }

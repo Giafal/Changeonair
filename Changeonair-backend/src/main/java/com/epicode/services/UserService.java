@@ -1,5 +1,7 @@
 package com.epicode.services;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,4 +31,13 @@ public class UserService {
 		User u = repo.findByUsername(username);
 		return u;
 	}
+	
+	public String getUsernameById(Long userId) throws EntityNotFoundException {
+        Optional<User> userOptional = repo.findById(userId);
+        if (userOptional.isPresent()) {
+            return userOptional.get().getUsername();
+        } else {
+            throw new EntityNotFoundException("Utente non trovato");
+        }
+    }
 }

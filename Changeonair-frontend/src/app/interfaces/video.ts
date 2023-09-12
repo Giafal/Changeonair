@@ -6,4 +6,6 @@ export interface Video {
   visualizzazioni?: number;
   url?: string;
   organizzazione: string;
+  utente?: number;
+  username?: string;
 }

@@ -1,6 +1,7 @@
 package com.epicode.services;
 
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 
 import com.epicode.model.Video;
+import com.epicode.model.VideoWithUsername;
 import com.epicode.repositories.VideoRepository;
 import com.epicode.security.entity.User;
 
@@ -65,6 +67,11 @@ public class VideoService {
 		return lista;
 	}
 	
+	public List<Video> getByUsernameUtente(String nome) {
+		List<Video> lista  = repo.findByUsernameUtente(nome);
+		return lista;
+	}
+	
 	public String deleteVideo(Long id) {
 		if(!repo.existsById(id)) {
 			throw new EntityNotFoundException("Video doesn't exists!!!");
@@ -85,6 +92,27 @@ public class VideoService {
 		return  repo.save(video);
 		
 	}
+	
+	public List<VideoWithUsername> getVideosWithUsername() {
+        List<Video> videos = repo.findAll(); // Recupera i video
+        List<VideoWithUsername> videosWithUsername = new ArrayList<>();
+
+        for (Video video : videos) {
+            VideoWithUsername videoWithUsername = new VideoWithUsername();
+            videoWithUsername.setId(video.getId());
+            videoWithUsername.setNome(video.getNome());
+            videoWithUsername.setDescrizione(video.getDescrizione());
+            videoWithUsername.setDataCaricamento(video.getDataCaricamento());
+            videoWithUsername.setVisualizzazioni(video.getVisualizzazioni());
+            videoWithUsername.setUrl(video.getUrl());
+            videoWithUsername.setOrganizzazione(video.getOrganizzazione());
+            videoWithUsername.setUtente(video.getUtente().getId()); // Ottieni l'ID dell'utente
+
+            videosWithUsername.add(videoWithUsername);
+        }
+
+        return videosWithUsername;
+    }
 	
 	
 

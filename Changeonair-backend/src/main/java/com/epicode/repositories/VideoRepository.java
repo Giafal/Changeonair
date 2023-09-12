@@ -15,6 +15,9 @@ public interface VideoRepository extends JpaRepository<Video, Long> {
 	@Query("SELECT v FROM Video v WHERE v.utente.id = :idUtente")
 	public List<Video> findByUtente(Long idUtente);
 	
+	@Query("SELECT v FROM Video v WHERE v.utente.username ILIKE :nome")
+	public List<Video> findByUsernameUtente(String nome);
+	
     
 
 }
