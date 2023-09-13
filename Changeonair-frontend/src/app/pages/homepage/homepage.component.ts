@@ -30,7 +30,7 @@ export class HomepageComponent implements OnInit {
       const requests = videos.map((video) =>
         this.svc.getUsername(video.utente!).pipe(
           map((username) => {
-            video.username = username;
+            video.username = Object.values(username)[0];
             console.log(username);
             return video;
           })
@@ -44,13 +44,37 @@ export class HomepageComponent implements OnInit {
     });
   }
 
+  // searchVideos(nome: string): void {
+  //   nome = this.nome;
+  //   forkJoin([
+  //     this.svc.getVideosByName(nome),
+  //     this.svc.getVideosByUsername(nome),
+  //   ]).subscribe(([videosByName, videosByUsername]) => {
+  //     this.videos = [...videosByName, ...videosByUsername];
+  //   });
+  // }
+
   searchVideos(nome: string): void {
     nome = this.nome;
     forkJoin([
       this.svc.getVideosByName(nome),
       this.svc.getVideosByUsername(nome),
     ]).subscribe(([videosByName, videosByUsername]) => {
-      this.videos = [...videosByName, ...videosByUsername];
+      console.log(videosByName);
+      console.log(videosByUsername);
+      const requests = [...videosByName, ...videosByUsername].map((video) =>
+        this.svc.getUsername(video.utente!).pipe(
+          map((username) => {
+            video.username = Object.values(username)[0];
+            console.log(video.utente);
+            return video;
+          })
+        )
+      );
+
+      forkJoin(requests).subscribe((videosWithUsername) => {
+        this.videos = videosWithUsername;
+      });
     });
   }
 }

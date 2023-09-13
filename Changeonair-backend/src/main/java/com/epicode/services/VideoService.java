@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 
 import com.epicode.model.Video;
+import com.epicode.model.VideoDTO;
 import com.epicode.model.VideoWithUsername;
 import com.epicode.repositories.VideoRepository;
 import com.epicode.security.entity.User;
@@ -49,17 +50,57 @@ public class VideoService {
 		return lista;
 	}
 	
-	public Video getVideoById(Long id) {
-		if(!repo.existsById(id)) {
-			throw new EntityNotFoundException("Video doesn't exists!!!");
-		}
-		Video v = repo.findById(id).get();
-		return v;
+//	public Video getVideoById(Long id) {
+//		if(!repo.existsById(id)) {
+//			throw new EntityNotFoundException("Video doesn't exists!!!");
+//		}
+//		Video v = repo.findById(id).get();
+//		return v;
+//	}
+	
+	public VideoDTO getVideoById(Long id) {
+	    Video video = repo.findById(id).get();
+	    
+	        VideoDTO videoDTO = new VideoDTO();
+	        videoDTO.setId(video.getId());
+	        videoDTO.setNome(video.getNome());
+	        videoDTO.setDescrizione(video.getDescrizione());
+	        videoDTO.setLikeCount(video.getLikeCount());
+	        videoDTO.setOrganizzazione(video.getOrganizzazione());
+	        videoDTO.setDataCaricamento(video.getDataCaricamento());
+	        videoDTO.setVisualizzazioni(video.getVisualizzazioni());
+	        videoDTO.setUrl(video.getUrl());
+	        videoDTO.setUtente(video.getUtente().getId()); 
+	        
+	    
+	    
+	    return videoDTO;
 	}
 	
-	public List<Video> getByName(String nome) {
-		List<Video> lista = repo.getByNome(nome);
-		return lista;
+//	public List<Video> getByName(String nome) {
+//		List<Video> lista = repo.getByNome(nome);
+//		return lista;
+//	}
+	
+	public List<VideoDTO> getByName(String nome) {
+	    List<Video> videos = repo.getByNome(nome);
+	    
+	    List<VideoDTO> videoDTOs = new ArrayList<>();
+	    for (Video video : videos) {
+	        VideoDTO videoDTO = new VideoDTO();
+	        videoDTO.setId(video.getId());
+	        videoDTO.setNome(video.getNome());
+	        videoDTO.setDescrizione(video.getDescrizione());
+	        videoDTO.setLikeCount(video.getLikeCount());
+	        videoDTO.setOrganizzazione(video.getOrganizzazione());
+	        videoDTO.setDataCaricamento(video.getDataCaricamento());
+	        videoDTO.setVisualizzazioni(video.getVisualizzazioni());
+	        videoDTO.setUrl(video.getUrl());
+	        videoDTO.setUtente(video.getUtente().getId()); 
+	        videoDTOs.add(videoDTO);
+	    }
+	    
+	    return videoDTOs;
 	}
 	
 	public List<Video> getByUtente(Long idUtente) {
@@ -67,20 +108,41 @@ public class VideoService {
 		return lista;
 	}
 	
-	public List<Video> getByUsernameUtente(String nome) {
-		List<Video> lista  = repo.findByUsernameUtente(nome);
-		return lista;
+//	public List<Video> getByUsernameUtente(String nome) {
+//		List<Video> lista  = repo.findByUsernameUtente(nome);
+//		return lista;
+//	}
+	
+	public List<VideoDTO> getByUsernameUtente(String nome) {
+	    List<Video> videos = repo.findByUsernameUtente(nome);
+	    
+	    List<VideoDTO> videoDTOs = new ArrayList<>();
+	    for (Video video : videos) {
+	        VideoDTO videoDTO = new VideoDTO();
+	        videoDTO.setId(video.getId());
+	        videoDTO.setNome(video.getNome());
+	        videoDTO.setDescrizione(video.getDescrizione());
+	        videoDTO.setLikeCount(video.getLikeCount());
+	        videoDTO.setOrganizzazione(video.getOrganizzazione());
+	        videoDTO.setDataCaricamento(video.getDataCaricamento());
+	        videoDTO.setVisualizzazioni(video.getVisualizzazioni());
+	        videoDTO.setUrl(video.getUrl());
+	        videoDTO.setUtente(video.getUtente().getId()); 
+	        videoDTOs.add(videoDTO);
+	    }
+	    
+	    return videoDTOs;
 	}
 	
-	public String deleteVideo(Long id) {
-		if(!repo.existsById(id)) {
-			throw new EntityNotFoundException("Video doesn't exists!!!");
-		}
-		Video v = getVideoById(id);
-		repo.delete(v);
-		return "Video deleted!!";
-		
-	}
+//	public String deleteVideo(Long id) {
+//		if(!repo.existsById(id)) {
+//			throw new EntityNotFoundException("Video doesn't exists!!!");
+//		}
+//		Video v = getVideoById(id);
+//		repo.delete(v);
+//		return "Video deleted!!";
+//		
+//	}
 	
 	public Video updateVideo(Long id, Video video) {
 		if(!repo.existsById(id)) {

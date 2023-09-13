@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Set;
 
 import com.epicode.model.Video;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @Setter
@@ -22,6 +24,7 @@ import com.epicode.model.Video;
 @Entity
 @Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = "username"),
 		@UniqueConstraint(columnNames = "email") })
+@JsonIgnoreProperties({"video"})
 public class User {
 
     @Id
@@ -43,5 +46,6 @@ public class User {
     )
     private Set<Role> roles = new HashSet<>();
     @OneToMany(mappedBy = "utente")
+    @JsonProperty("utente_id")
     private List<Video> video;
 }

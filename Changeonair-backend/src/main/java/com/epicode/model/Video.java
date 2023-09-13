@@ -4,7 +4,10 @@ import java.util.Date;
 import java.util.List;
 
 import com.epicode.security.entity.User;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -43,7 +46,7 @@ public class Video {
 	private String organizzazione;
 	@ManyToOne
 	@JoinColumn(name = "utente_id")
-	@JsonIgnore
+	@JsonProperty("utente_id")
 	private User utente;
 
 }

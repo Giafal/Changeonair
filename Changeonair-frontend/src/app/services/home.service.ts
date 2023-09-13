@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Video } from '../interfaces/video';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin, map, switchMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',

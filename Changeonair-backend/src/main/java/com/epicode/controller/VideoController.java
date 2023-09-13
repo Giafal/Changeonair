@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.epicode.model.Video;
+import com.epicode.model.VideoDTO;
 import com.epicode.model.VideoWithUsername;
 import com.epicode.payload.FileUploadResponse;
 import com.epicode.security.entity.User;
@@ -105,16 +106,16 @@ public class VideoController {
 	}
 	
 	@GetMapping("/getVideo/{id}")
-	public ResponseEntity<Video> getVideo(@PathVariable Long id) {
-		Video v = svc.getVideoById(id);
-		return new ResponseEntity<Video>(v, HttpStatus.OK);
+	public ResponseEntity<VideoDTO> getVideo(@PathVariable Long id) {
+		VideoDTO v = svc.getVideoById(id);
+		return new ResponseEntity<VideoDTO>(v, HttpStatus.OK);
 	}
 	
 	@GetMapping("/getVideosByNome/{nome}")
-	public ResponseEntity<List<Video>> getByName(@PathVariable String nome) {
+	public ResponseEntity<List<VideoDTO>> getByName(@PathVariable String nome) {
 		String parametroConJolly = "%" + nome + "%";
-		List<Video> lista = svc.getByName(parametroConJolly);
-		ResponseEntity<List<Video>> result = new ResponseEntity<List<Video>>(lista, HttpStatus.OK);
+		List<VideoDTO> lista = svc.getByName(parametroConJolly);
+		ResponseEntity<List<VideoDTO>> result = new ResponseEntity<List<VideoDTO>>(lista, HttpStatus.OK);
 		return result;
 	}
 	
@@ -125,10 +126,10 @@ public class VideoController {
 	}
 	
 	@GetMapping("/getVideosByUsernameUtente/{username}")
-	public ResponseEntity<List<Video>> getByUsernameUtente(@PathVariable String username) {
+	public ResponseEntity<List<VideoDTO>> getByUsernameUtente(@PathVariable String username) {
 		String parametroConJolly = "%" + username + "%";
-		List<Video> lista = svc.getByUsernameUtente(parametroConJolly);
-		return new ResponseEntity<List<Video>>(lista, HttpStatus.OK);
+		List<VideoDTO> lista = svc.getByUsernameUtente(parametroConJolly);
+		return new ResponseEntity<List<VideoDTO>>(lista, HttpStatus.OK);
 		
 		
 	}
@@ -158,11 +159,11 @@ public class VideoController {
                 .body(resource);       
     }
 	
-	@DeleteMapping("/deleteVideo/{id}")
-	public ResponseEntity<String> deleteVideo(@PathVariable Long id) {
-		String msg = svc.deleteVideo(id);
-		return new ResponseEntity<String>(msg, HttpStatus.OK);
-	}
+//	@DeleteMapping("/deleteVideo/{id}")
+//	public ResponseEntity<String> deleteVideo(@PathVariable Long id) {
+//		String msg = svc.deleteVideo(id);
+//		return new ResponseEntity<String>(msg, HttpStatus.OK);
+//	}
 	
 	@PutMapping("/updateVideo/{id}")
 	public ResponseEntity<?> updateVideo(@PathVariable Long id, @RequestBody Video video) {
