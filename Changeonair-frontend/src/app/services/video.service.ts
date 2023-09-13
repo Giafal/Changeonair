@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Video } from '../interfaces/video';
+import { Commento } from '../interfaces/commento';
 
 @Injectable({
   providedIn: 'root',
@@ -43,5 +44,28 @@ export class VideoService {
         headers: this.headers,
       }
     );
+  }
+
+  getCommentiByVideoId(videoId: number): Observable<Commento[]> {
+    this.headers = this.headers.set(
+      'Authorization',
+      'Bearer ' + this.getToken()
+    );
+    return this.http.get<Commento[]>(
+      `http://localhost:8080/commenti/getCommenti/${videoId}`,
+      {
+        headers: this.headers,
+      }
+    );
+  }
+
+  creaCommento(data: FormData): Observable<Commento> {
+    this.headers = this.headers.set(
+      'Authorization',
+      'Bearer ' + this.getToken()
+    );
+    return this.http.post(`http://localhost:8080/commenti/crea`, data, {
+      headers: this.headers,
+    });
   }
 }

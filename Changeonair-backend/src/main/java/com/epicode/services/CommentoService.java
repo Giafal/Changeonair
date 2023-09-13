@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.epicode.model.Commento;
 import com.epicode.model.Video;
+import com.epicode.model.VideoDTO;
 import com.epicode.repositories.CommentoRepository;
 import com.epicode.repositories.VideoRepository;
 import com.epicode.security.entity.User;

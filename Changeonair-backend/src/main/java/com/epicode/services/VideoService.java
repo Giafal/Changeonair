@@ -50,15 +50,15 @@ public class VideoService {
 		return lista;
 	}
 	
-//	public Video getVideoById(Long id) {
-//		if(!repo.existsById(id)) {
-//			throw new EntityNotFoundException("Video doesn't exists!!!");
-//		}
-//		Video v = repo.findById(id).get();
-//		return v;
-//	}
+	public Video getVideoById(Long id) {
+		if(!repo.existsById(id)) {
+			throw new EntityNotFoundException("Video doesn't exists!!!");
+		}
+		Video v = repo.findById(id).get();
+		return v;
+	}
 	
-	public VideoDTO getVideoById(Long id) {
+	public VideoDTO getVideoDTOById(Long id) {
 	    Video video = repo.findById(id).get();
 	    
 	        VideoDTO videoDTO = new VideoDTO();

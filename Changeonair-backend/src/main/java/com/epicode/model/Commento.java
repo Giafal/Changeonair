@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.epicode.security.entity.User;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -21,6 +22,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@JsonSerialize
 public class Commento {
 	
 	@Id

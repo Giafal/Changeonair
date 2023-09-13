@@ -32,13 +32,6 @@ export class UploadComponent {
       formData.append('descrizione', this.video.descrizione);
       formData.append('organizzazione', this.video.organizzazione);
 
-      console.log(this.selectedFile);
-      console.log(this.video);
-      console.log(formData.get('file'));
-      console.log(formData.get('nome'));
-      console.log(formData.get('descrizione'));
-      console.log(formData.get('organizzazione'));
-
       this.svc.creaVideo(formData).subscribe(
         (response) => {
           console.log('File caricato con successo:', response);

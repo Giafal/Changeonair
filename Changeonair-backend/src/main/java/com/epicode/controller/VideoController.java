@@ -107,7 +107,7 @@ public class VideoController {
 	
 	@GetMapping("/getVideo/{id}")
 	public ResponseEntity<VideoDTO> getVideo(@PathVariable Long id) {
-		VideoDTO v = svc.getVideoById(id);
+		VideoDTO v = svc.getVideoDTOById(id);
 		return new ResponseEntity<VideoDTO>(v, HttpStatus.OK);
 	}
 	

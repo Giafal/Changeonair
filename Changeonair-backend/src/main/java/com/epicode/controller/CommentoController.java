@@ -5,16 +5,19 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.epicode.model.Commento;
 import com.epicode.model.Video;
+import com.epicode.model.VideoDTO;
 import com.epicode.security.entity.User;
 import com.epicode.services.CommentoService;
 import com.epicode.services.UserService;
@@ -22,6 +25,7 @@ import com.epicode.services.VideoService;
 
 @RestController
 @RequestMapping("/commenti")
+@CrossOrigin(origins = "*")
 public class CommentoController {
 	
 	@Autowired VideoService videoService;
@@ -67,8 +71,9 @@ public class CommentoController {
 		return new ResponseEntity<String>(msg, HttpStatus.OK);
 	}
 	
-	@GetMapping
-	public ResponseEntity<List<Commento>> getCommentiByVideoId(@RequestParam Long videoId) {
+	@GetMapping("/getCommenti/{videoId}")
+	@ResponseBody
+	public ResponseEntity<List<Commento>> getCommentiByVideoId(@PathVariable Long videoId) {
 		List<Commento> lista = commentoService.getCommentiByVideoId(videoId);
 		return new ResponseEntity<List<Commento>>(lista, HttpStatus.OK);
 	}

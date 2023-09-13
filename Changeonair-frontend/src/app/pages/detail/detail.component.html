@@ -1,2 +1,22 @@
 <h1>{{ video.nome }}</h1>
 <video [src]="video.url" controls></video>
+<h2>Commenti</h2>
+<form #f="ngForm" (ngSubmit)="creaCommento()">
+  <div class="mb-3">
+    <input
+      type="text"
+      [(ngModel)]="commento.testo"
+      class="form-control"
+      id="commento"
+      name="commento"
+      placeholder="Inserisci il tuo commento..."
+      required
+    />
+  </div>
+  <div class="d-grid gap-2">
+    <button class="btn btn-primary" type="submit">Commenta</button>
+  </div>
+</form>
+<div *ngFor="let commento of commenti">
+  <p>{{ commento.testo }}</p>
+</div>
