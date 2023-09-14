@@ -68,4 +68,14 @@ export class VideoService {
       headers: this.headers,
     });
   }
+
+  addVisualizzazione(id: number): Observable<any> {
+    this.headers = this.headers.set(
+      'Authorization',
+      'Bearer ' + this.getToken()
+    );
+    return this.http.put<Video>(`${this.apiUrl}/addVisualizzazione/${id}`, {
+      headers: this.headers,
+    });
+  }
 }

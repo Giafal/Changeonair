@@ -1,6 +1,7 @@
 package com.epicode.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,12 @@ public class UserController {
 	public ResponseEntity<User> getUser(@PathVariable Long id) {
 		User u = userService.getUserById(id);
 		return new ResponseEntity<User>(u, HttpStatus.OK);
+	}
+	
+	@GetMapping("/getUsers")
+	public ResponseEntity<List<User>> getAllUsers() {
+		List<User> lista = userService.getAllUsers();
+		return new ResponseEntity<List<User>>(lista, HttpStatus.OK);
 	}
 	
 //	@GetMapping("/getUsernameById/{userId}")

@@ -170,6 +170,12 @@ public class VideoController {
 		Video v = svc.updateVideo(id, video);
 		return new ResponseEntity<Video>(v, HttpStatus.OK);
 	}
+	
+	@PutMapping("/addVisualizzazione/{videoId}")
+	public ResponseEntity<?> addVisualizzazione(@PathVariable Long videoId) {
+		Video v = svc.addVisualizzazione(videoId);
+		return new ResponseEntity<Video>(v, HttpStatus.OK);
+	}
 }
 
     

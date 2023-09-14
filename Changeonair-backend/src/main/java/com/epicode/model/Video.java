@@ -3,14 +3,20 @@ package com.epicode.model;
 import java.util.Date;
 import java.util.List;
 
+
+import org.hibernate.annotations.Fetch;
+
+
 import com.epicode.security.entity.User;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -26,6 +32,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Video {
 	
 	@Id
@@ -38,7 +45,6 @@ public class Video {
 	@JsonIgnore
 	private List<Video_like> likes;
 	@OneToMany(mappedBy = "video", cascade = CascadeType.ALL)
-	@JsonIgnore
 	private List<Commento> commenti;
 	private int likeCount;
 	private Long visualizzazioni;

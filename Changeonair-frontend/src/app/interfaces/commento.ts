@@ -1,3 +1,5 @@
+import { User } from './user';
+
 export interface Commento {
   id?: number;
   data_commento?: Date;
@@ -5,4 +7,5 @@ export interface Commento {
   video_id?: number;
   testo?: string;
   commento_padre_id?: number;
+  utente?: User;
 }

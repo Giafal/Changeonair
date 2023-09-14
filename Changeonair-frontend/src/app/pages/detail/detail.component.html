@@ -1,5 +1,7 @@
 <h1>{{ video.nome }}</h1>
-<video [src]="video.url" controls></video>
+<video [src]="video.url" controls (play)="incrementaVisualizzazioni()"></video>
+<p>Visualizzazioni: {{ video.visualizzazioni }}</p>
+<p>Like: {{ video.likeCount }}</p>
 <h2>Commenti</h2>
 <form #f="ngForm" (ngSubmit)="creaCommento()">
   <div class="mb-3">
@@ -18,5 +20,5 @@
   </div>
 </form>
 <div *ngFor="let commento of commenti">
-  <p>{{ commento.testo }}</p>
+  <p>{{ commento.testo }} - {{ getNomeUtente(commento.utente!.id!) }}</p>
 </div>

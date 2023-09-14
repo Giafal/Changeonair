@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.epicode.interfaces.CommentoProjection;
 import com.epicode.model.Commento;
 import com.epicode.model.Video;
 import com.epicode.model.VideoDTO;
@@ -66,9 +67,15 @@ public class CommentoService {
 		
 	}
 	
-	public List<Commento> getCommentiByVideoId(Long id) {
-		Video v = videoRepo.findById(id).get();
-		List<Commento> lista = v.getCommenti();
+	public List<Commento> getAllCommenti() {
+		List<Commento> lista = repo.findAll();
+		return lista;
+	}
+	
+	
+	public List<CommentoProjection> getCommentiByVideoId(Long id) {
+		//Video v = videoRepo.findById(id).get();
+		List<CommentoProjection> lista = repo.findAllByVideoId(id);
 		return lista;
 	}
 

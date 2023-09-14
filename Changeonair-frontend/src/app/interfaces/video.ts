@@ -4,6 +4,7 @@ export interface Video {
   descrizione?: string;
   dataCaricamento?: Date;
   visualizzazioni?: number;
+  likeCount?: number;
   url?: string;
   organizzazione?: string;
   utente?: number;

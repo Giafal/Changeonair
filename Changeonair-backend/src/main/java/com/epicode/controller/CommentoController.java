@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.epicode.interfaces.CommentoProjection;
 import com.epicode.model.Commento;
 import com.epicode.model.Video;
 import com.epicode.model.VideoDTO;
@@ -22,6 +23,8 @@ import com.epicode.security.entity.User;
 import com.epicode.services.CommentoService;
 import com.epicode.services.UserService;
 import com.epicode.services.VideoService;
+
+import jakarta.transaction.Transactional;
 
 @RestController
 @RequestMapping("/commenti")
@@ -72,9 +75,14 @@ public class CommentoController {
 	}
 	
 	@GetMapping("/getCommenti/{videoId}")
-	@ResponseBody
-	public ResponseEntity<List<Commento>> getCommentiByVideoId(@PathVariable Long videoId) {
-		List<Commento> lista = commentoService.getCommentiByVideoId(videoId);
+	public ResponseEntity<List<CommentoProjection>> getCommentiByVideoId(@PathVariable Long videoId) {
+		List<CommentoProjection> lista = commentoService.getCommentiByVideoId(videoId);
+		return new ResponseEntity<List<CommentoProjection>>(lista, HttpStatus.OK);
+	}
+	
+	@GetMapping("/getCommenti")
+	public ResponseEntity<List<Commento>> getAllCommenti() {
+		List<Commento> lista = commentoService.getAllCommenti();
 		return new ResponseEntity<List<Commento>>(lista, HttpStatus.OK);
 	}
 }

@@ -4,7 +4,7 @@ package com.epicode.services;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
+import java.util.Optional;
 
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -168,13 +168,26 @@ public class VideoService {
             videoWithUsername.setVisualizzazioni(video.getVisualizzazioni());
             videoWithUsername.setUrl(video.getUrl());
             videoWithUsername.setOrganizzazione(video.getOrganizzazione());
-            videoWithUsername.setUtente(video.getUtente().getId()); // Ottieni l'ID dell'utente
+            if(video.getUtente() != null) {
+            videoWithUsername.setUtente(video.getUtente().getId()); 
 
             videosWithUsername.add(videoWithUsername);
+            } else {}
         }
 
         return videosWithUsername;
     }
+	
+	public Video addVisualizzazione(Long id) {
+		if(!repo.existsById(id)) {
+			throw new EntityNotFoundException("Video doesn't exists!!!");
+		}
+		Video v = repo.findById(id).get();
+		v.setVisualizzazioni(v.getVisualizzazioni() + 1);
+		
+		repo.save(v);
+		return v;
+	}
 	
 	
 

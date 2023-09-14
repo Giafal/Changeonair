@@ -1,5 +1,6 @@
 package com.epicode.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,11 @@ public class UserService {
 		}
 		User u = repo.findById(id).get();
 		return u;
+	}
+	
+	public List<User> getAllUsers() {
+		List<User> lista = repo.findAll();
+		return lista;
 	}
 
 

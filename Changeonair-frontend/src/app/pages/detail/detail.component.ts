@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Commento } from 'src/app/interfaces/commento';
 import { User } from 'src/app/interfaces/user';
 import { Video } from 'src/app/interfaces/video';
+import { HomeService } from 'src/app/services/home.service';
 import { VideoService } from 'src/app/services/video.service';
 
 @Component({
@@ -14,17 +15,23 @@ import { VideoService } from 'src/app/services/video.service';
 export class DetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
-    private videoService: VideoService
+    private videoService: VideoService,
+    private homeService: HomeService
   ) {}
 
   @ViewChild('f') form!: NgForm;
 
   videoId!: number | any;
+
   video: Video = {
     nome: '',
     descrizione: '',
     organizzazione: '',
   };
+
+  visualizzazioni: number = 0;
+
+  utenti: User[] = [];
 
   commenti: Commento[] = [];
 
@@ -45,6 +52,7 @@ export class DetailComponent implements OnInit {
       this.videoId = +params.get('id')!;
       this.loadVideoDetails();
       this.loadCommenti();
+      this.loadUtenti();
     });
   }
 
@@ -61,6 +69,12 @@ export class DetailComponent implements OnInit {
     });
   }
 
+  loadUtenti() {
+    this.homeService.getUsers().subscribe((users) => {
+      this.utenti = users;
+    });
+  }
+
   creaCommento() {
     const formData = new FormData();
     formData.append('utenteId', localStorage.getItem('userId')!);
@@ -74,6 +88,27 @@ export class DetailComponent implements OnInit {
       },
       (err) => {
         console.log('Error', err);
+      }
+    );
+  }
+
+  getNomeUtente(utenteId: number): string {
+    // Trova l'utente corrispondente nell'array di utenti o attraverso un servizio
+    const utenteCorrispondente = this.utenti.find(
+      (utente) => utente.id === utenteId
+    );
+    return utenteCorrispondente
+      ? utenteCorrispondente.username
+      : 'Utente non trovato';
+  }
+
+  incrementaVisualizzazioni() {
+    this.videoService.addVisualizzazione(this.videoId).subscribe(
+      (res: any) => {
+        console.log(res);
+      },
+      (err: any) => {
+        console.log(err);
       }
     );
   }
