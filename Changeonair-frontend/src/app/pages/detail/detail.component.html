@@ -1,7 +1,14 @@
 <h1>{{ video.nome }}</h1>
 <video [src]="video.url" controls (play)="incrementaVisualizzazioni()"></video>
 <p>Visualizzazioni: {{ video.visualizzazioni }}</p>
-<p>Like: {{ video.likeCount }}</p>
+<p>
+  <button class="btn btn-outline-danger" (click)="addLike()">Like</button>:
+  {{ video.likeCount }}
+</p>
+<p>Organizzazione: {{ video.organizzazione }}</p>
+<p>Data: {{ video.dataCaricamento | date : "shortDate" }}</p>
+<p>Descrizione: {{ video.descrizione }}</p>
+<p>Utente: {{ video.username }}</p>
 <h2>Commenti</h2>
 <form #f="ngForm" (ngSubmit)="creaCommento()">
   <div class="mb-3">

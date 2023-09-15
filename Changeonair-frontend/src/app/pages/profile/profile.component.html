@@ -7,5 +7,8 @@
 
 <div *ngFor="let video of videos">
   <a [routerLink]="['/detail', video.id]">{{ video.nome }}</a>
-  <video [src]="video.url" controls></video>
+  <a [routerLink]="['/detail', video.id]"><video [src]="video.url"></video></a>
+  <button (click)="deleteVideo(video.id!)" class="btn btn-outline-danger">
+    Cancella video
+  </button>
 </div>

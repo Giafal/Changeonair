@@ -78,4 +78,24 @@ export class VideoService {
       headers: this.headers,
     });
   }
+
+  addLike(data: FormData): Observable<any> {
+    this.headers = this.headers.set(
+      'Authorization',
+      'Bearer ' + this.getToken()
+    );
+    return this.http.post(`http://localhost:8080/api/likes/add`, data, {
+      headers: this.headers,
+    });
+  }
+
+  deleteVideo(id: number): Observable<any> {
+    this.headers = this.headers.set(
+      'Authorization',
+      'Bearer ' + this.getToken()
+    );
+    return this.http.delete(`${this.apiUrl}/deleteVideo/${id}`, {
+      headers: this.headers,
+    });
+  }
 }

@@ -54,6 +54,19 @@
         required
       />
     </div>
+    <div class="mb-3">
+      <label for="checkbox"
+        >Accetto i
+        <a [routerLink]="['/termini']">termini e le condizioni</a></label
+      >
+      <input
+        type="checkbox"
+        id="checkbox"
+        [(ngModel)]="checkbox"
+        name="checkbox"
+        required
+      />
+    </div>
     <div class="d-grid gap-2">
       <button class="btn btn-primary" type="submit">Registrati</button>
     </div>

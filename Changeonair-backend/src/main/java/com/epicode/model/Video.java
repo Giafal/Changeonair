@@ -52,7 +52,7 @@ public class Video {
 	private String organizzazione;
 	@ManyToOne
 	@JoinColumn(name = "utente_id")
-	@JsonProperty("utente_id")
+	//@JsonProperty("utente_id")
 	private User utente;
 
 }

@@ -103,9 +103,25 @@ public class VideoService {
 	    return videoDTOs;
 	}
 	
-	public List<Video> getByUtente(Long idUtente) {
-		List<Video> lista = repo.findByUtente(idUtente);
-		return lista;
+	public List<VideoDTO> getByUtente(Long idUtente) {
+		List<Video> videos = repo.findByIdUtente(idUtente);
+		List<VideoDTO> videoDTOs = new ArrayList<>();
+	    for (Video video : videos) {
+	        VideoDTO videoDTO = new VideoDTO();
+	        videoDTO.setId(video.getId());
+	        videoDTO.setNome(video.getNome());
+	        videoDTO.setDescrizione(video.getDescrizione());
+	        videoDTO.setLikeCount(video.getLikeCount());
+	        videoDTO.setOrganizzazione(video.getOrganizzazione());
+	        videoDTO.setDataCaricamento(video.getDataCaricamento());
+	        videoDTO.setVisualizzazioni(video.getVisualizzazioni());
+	        videoDTO.setUrl(video.getUrl());
+	        videoDTO.setUtente(video.getUtente().getId()); 
+	        videoDTOs.add(videoDTO);
+	    }
+	    
+	    return videoDTOs;
+		
 	}
 	
 //	public List<Video> getByUsernameUtente(String nome) {
@@ -134,15 +150,15 @@ public class VideoService {
 	    return videoDTOs;
 	}
 	
-//	public String deleteVideo(Long id) {
-//		if(!repo.existsById(id)) {
-//			throw new EntityNotFoundException("Video doesn't exists!!!");
-//		}
-//		Video v = getVideoById(id);
-//		repo.delete(v);
-//		return "Video deleted!!";
-//		
-//	}
+	public String deleteVideo(Long id) {
+		if(!repo.existsById(id)) {
+			throw new EntityNotFoundException("Video doesn't exists!!!");
+		}
+		Video v = getVideoById(id);
+		repo.delete(v);
+		return "Video deleted!!";
+		
+	}
 	
 	public Video updateVideo(Long id, Video video) {
 		if(!repo.existsById(id)) {

@@ -120,9 +120,9 @@ public class VideoController {
 	}
 	
 	@GetMapping("/getVideosByUtente/{idUtente}")
-	public ResponseEntity<List<Video>> getByUtente(@PathVariable Long idUtente) {
-		List<Video> lista = svc.getByUtente(idUtente);
-		return new ResponseEntity<List<Video>>(lista, HttpStatus.OK);
+	public ResponseEntity<List<VideoDTO>> getByUtente(@PathVariable Long idUtente) {
+		List<VideoDTO> lista = svc.getByUtente(idUtente);
+		return new ResponseEntity<List<VideoDTO>>(lista, HttpStatus.OK);
 	}
 	
 	@GetMapping("/getVideosByUsernameUtente/{username}")
@@ -159,11 +159,11 @@ public class VideoController {
                 .body(resource);       
     }
 	
-//	@DeleteMapping("/deleteVideo/{id}")
-//	public ResponseEntity<String> deleteVideo(@PathVariable Long id) {
-//		String msg = svc.deleteVideo(id);
-//		return new ResponseEntity<String>(msg, HttpStatus.OK);
-//	}
+	@DeleteMapping("/deleteVideo/{id}")
+	public ResponseEntity<?> deleteVideo(@PathVariable Long id) {
+		String msg = svc.deleteVideo(id);
+		return new ResponseEntity<String>(msg, HttpStatus.OK);
+	}
 	
 	@PutMapping("/updateVideo/{id}")
 	public ResponseEntity<?> updateVideo(@PathVariable Long id, @RequestBody Video video) {

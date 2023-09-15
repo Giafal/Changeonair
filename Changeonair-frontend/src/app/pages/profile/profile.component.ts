@@ -44,9 +44,26 @@ export class ProfileComponent implements OnInit {
     userId = JSON.parse(localStorage.getItem('userId')!);
     this.videoSvc.getVideoByUtente(userId).subscribe((data) => {
       this.videos = data;
+      console.log(data);
     }),
       (err: any) => {
         console.log(err);
       };
+  }
+
+  deleteVideo(id: number): void {
+    this.videoSvc.deleteVideo(id).subscribe(
+      () => {
+        this.videos = this.videos.filter((video) => video.id !== id);
+        console.log('Video cancellato con successo!');
+      },
+      (error) => {
+        this.videos = this.videos.filter((video) => video.id !== id);
+        console.error(
+          'Si è verificato un errore durante la cancellazione del video:',
+          error
+        );
+      }
+    );
   }
 }

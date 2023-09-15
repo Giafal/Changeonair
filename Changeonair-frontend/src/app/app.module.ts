@@ -13,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { UploadComponent } from './pages/upload/upload.component';
 import { DetailComponent } from './pages/detail/detail.component';
+import { TerminiComponent } from './components/termini/termini.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { DetailComponent } from './pages/detail/detail.component';
     RegisterComponent,
     ProfileComponent,
     UploadComponent,
-    DetailComponent
+    DetailComponent,
+    TerminiComponent
   ],
   imports: [
     BrowserModule,

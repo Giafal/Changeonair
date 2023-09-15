@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Commento } from 'src/app/interfaces/commento';
 import { User } from 'src/app/interfaces/user';
 import { Video } from 'src/app/interfaces/video';
+import { AuthService } from 'src/app/services/auth.service';
 import { HomeService } from 'src/app/services/home.service';
 import { VideoService } from 'src/app/services/video.service';
 
@@ -16,7 +17,8 @@ export class DetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private videoService: VideoService,
-    private homeService: HomeService
+    private homeService: HomeService,
+    private authService: AuthService
   ) {}
 
   @ViewChild('f') form!: NgForm;
@@ -56,9 +58,27 @@ export class DetailComponent implements OnInit {
     });
   }
 
+  // loadVideoDetails() {
+  //   this.videoService.getVideoById(this.videoId).subscribe((data) => {
+  //     this.video = data;
+  //   });
+  // }
+
   loadVideoDetails() {
     this.videoService.getVideoById(this.videoId).subscribe((data) => {
       this.video = data;
+
+      // Ottieni lo username
+      if (data.utente) {
+        this.homeService.getUsername(data.utente).subscribe(
+          (username) => {
+            this.video.username = Object.values(username)[0];
+          },
+          (error) => {
+            console.error('Errore nel recupero dello username', error);
+          }
+        );
+      }
     });
   }
 
@@ -76,20 +96,24 @@ export class DetailComponent implements OnInit {
   }
 
   creaCommento() {
-    const formData = new FormData();
-    formData.append('utenteId', localStorage.getItem('userId')!);
-    formData.append('videoId', this.videoId);
-    formData.append('testo', this.commento.testo!);
+    if (this.authService.loggedIn) {
+      const formData = new FormData();
+      formData.append('utenteId', localStorage.getItem('userId')!);
+      formData.append('videoId', this.videoId);
+      formData.append('testo', this.commento.testo!);
 
-    this.videoService.creaCommento(formData).subscribe(
-      (data) => {
-        console.log('Commento creato con successo', data);
-        this.loadCommenti();
-      },
-      (err) => {
-        console.log('Error', err);
-      }
-    );
+      this.videoService.creaCommento(formData).subscribe(
+        (data) => {
+          console.log('Commento creato con successo', data);
+          this.loadCommenti();
+        },
+        (err) => {
+          console.log('Error', err);
+        }
+      );
+
+      this.form.reset();
+    }
   }
 
   getNomeUtente(utenteId: number): string {
@@ -111,5 +135,22 @@ export class DetailComponent implements OnInit {
         console.log(err);
       }
     );
+  }
+
+  addLike() {
+    if (this.authService.loggedIn) {
+      const formData = new FormData();
+      formData.append('videoId', this.videoId);
+      formData.append('userId', localStorage.getItem('userId')!);
+
+      this.videoService.addLike(formData).subscribe(
+        (res) => {
+          console.log('Like aggiunto', res);
+        },
+        (err) => {
+          console.log('Error', err);
+        }
+      );
+    }
   }
 }

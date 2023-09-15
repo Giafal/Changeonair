@@ -7,6 +7,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { AuthGuard } from './auth/auth.guard';
 import { UploadComponent } from './pages/upload/upload.component';
 import { DetailComponent } from './pages/detail/detail.component';
+import { TerminiComponent } from './components/termini/termini.component';
 
 const routes: Routes = [
   { path: '', component: HomepageComponent },
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'upload', component: UploadComponent, canActivate: [AuthGuard] },
   { path: 'detail/:id', component: DetailComponent },
+  { path: 'termini', component: TerminiComponent },
 ];
 
 @NgModule({
