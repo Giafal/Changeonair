@@ -1,14 +1,18 @@
 <h1>Ciao {{ userData.name }}</h1>
 
 <h2>Vuoi caricare un video?</h2>
-<button class="btn btn-outline-primary" [routerLink]="'/upload'">
+<button class="btn btn-outline-dark" [routerLink]="'/upload'">
   Clicca qui
 </button>
 
-<div *ngFor="let video of videos">
-  <a [routerLink]="['/detail', video.id]">{{ video.nome }}</a>
-  <a [routerLink]="['/detail', video.id]"><video [src]="video.url"></video></a>
-  <button (click)="deleteVideo(video.id!)" class="btn btn-outline-danger">
-    Cancella video
-  </button>
+<div class="grid">
+  <div class="video" *ngFor="let video of videos">
+    <p>{{ video.nome }}</p>
+    <a [routerLink]="['/detail', video.id]"
+      ><video [src]="video.url"></video
+    ></a>
+    <button (click)="deleteVideo(video.id!)" class="btn btn-outline-danger">
+      Cancella video
+    </button>
+  </div>
 </div>

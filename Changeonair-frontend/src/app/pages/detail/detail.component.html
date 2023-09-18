@@ -1,15 +1,25 @@
-<h1>{{ video.nome }}</h1>
 <video [src]="video.url" controls (play)="incrementaVisualizzazioni()"></video>
-<p>Visualizzazioni: {{ video.visualizzazioni }}</p>
+<h3>{{ video.nome }}</h3>
 <p>
-  <button class="btn btn-outline-danger" (click)="addLike()">Like</button>:
+  <strong>{{ video.username }}</strong>
+</p>
+
+<p>
+  Organizzazione sostenuta: <strong>{{ video.organizzazione }}</strong>
+</p>
+<div class="descrizione">
+  <p>
+    {{ video.visualizzazioni }} visualizzazioni -
+    {{ video.dataCaricamento | date : "shortDate" }}
+  </p>
+  <p>{{ video.descrizione }}</p>
+</div>
+<p>
+  <button class="btn btn-outline-dark" (click)="addLike()">Like</button>
   {{ video.likeCount }}
 </p>
-<p>Organizzazione: {{ video.organizzazione }}</p>
-<p>Data: {{ video.dataCaricamento | date : "shortDate" }}</p>
-<p>Descrizione: {{ video.descrizione }}</p>
-<p>Utente: {{ video.username }}</p>
-<h2>Commenti</h2>
+
+<h4>{{ commenti.length }} Commenti</h4>
 <form #f="ngForm" (ngSubmit)="creaCommento()">
   <div class="mb-3">
     <input
@@ -23,9 +33,12 @@
     />
   </div>
   <div class="d-grid gap-2">
-    <button class="btn btn-primary" type="submit">Commenta</button>
+    <button class="btn btn-dark" type="submit">Commenta</button>
   </div>
 </form>
 <div *ngFor="let commento of commenti">
-  <p>{{ commento.testo }} - {{ getNomeUtente(commento.utente!.id!) }}</p>
+  <p>
+    <strong>{{ getNomeUtente(commento.utente!.id!) }}</strong> -
+    {{ commento.testo }}
+  </p>
 </div>

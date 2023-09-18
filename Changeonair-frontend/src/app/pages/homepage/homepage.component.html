@@ -1,10 +1,18 @@
-<div>
-  <input [(ngModel)]="nome" placeholder="Cerca video per nome" />
+<div class="searchbar">
+  <input [(ngModel)]="nome" id="searchbar" placeholder="Cerca video" />
   <button (click)="searchVideos(nome)">Cerca</button>
 </div>
 
-<div *ngFor="let video of videos">
-  <a [routerLink]="['/detail', video.id]">{{ video.nome }}</a>
-  <p>{{ video.username }}</p>
-  <a [routerLink]="['/detail', video.id]"><video [src]="video.url"></video></a>
+<div class="grid">
+  <div *ngFor="let video of videos">
+    <div class="video">
+      <a [routerLink]="['/detail', video.id]">
+        <video [src]="video.url"></video>
+      </a>
+      <p>
+        <strong>{{ video.nome }}</strong>
+      </p>
+      <p>{{ video.username }}</p>
+    </div>
+  </div>
 </div>
