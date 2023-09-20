@@ -27,7 +27,7 @@ import { AboutComponent } from './pages/about/about.component';
     UploadComponent,
     DetailComponent,
     TerminiComponent,
-    AboutComponent
+    AboutComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,6 +37,6 @@ import { AboutComponent } from './pages/about/about.component';
     FormsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
