@@ -36,7 +36,7 @@
     <button class="btn btn-dark" type="submit">Commenta</button>
   </div>
 </form>
-<div *ngFor="let commento of commenti">
+<div class="mt-3" *ngFor="let commento of commenti">
   <p>
     <strong>{{ getNomeUtente(commento.utente!.id!) }}</strong> -
     {{ commento.testo }}

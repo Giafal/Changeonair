@@ -62,7 +62,6 @@ export class DetailComponent implements OnInit {
     this.videoService.getVideoById(this.videoId).subscribe((data) => {
       this.video = data;
 
-      // Ottieni lo username
       if (data.utente) {
         this.homeService.getUsername(data.utente).subscribe(
           (username) => {
@@ -124,9 +123,11 @@ export class DetailComponent implements OnInit {
     this.videoService.addVisualizzazione(this.videoId).subscribe(
       (res: any) => {
         console.log(res);
+        this.updateVisualizzazioni();
       },
       (err: any) => {
         console.log(err);
+        this.updateVisualizzazioni();
       }
     );
   }
@@ -140,11 +141,35 @@ export class DetailComponent implements OnInit {
       this.videoService.addLike(formData).subscribe(
         (res) => {
           console.log('Like aggiunto', res);
+          this.updateLikeCount();
         },
         (err) => {
           console.log('Error', err);
+          this.updateLikeCount();
         }
       );
     }
+  }
+
+  private updateLikeCount() {
+    this.videoService.getLikeCount(this.videoId).subscribe(
+      (likeCount) => {
+        this.video.likeCount = likeCount;
+      },
+      (err) => {
+        console.log('Error fetching like count', err);
+      }
+    );
+  }
+
+  private updateVisualizzazioni() {
+    this.videoService.getVisualizzazioni(this.videoId).subscribe(
+      (visualizzazioni) => {
+        this.video.visualizzazioni = visualizzazioni;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 }

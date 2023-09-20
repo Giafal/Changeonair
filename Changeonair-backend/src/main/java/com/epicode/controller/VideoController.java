@@ -176,6 +176,12 @@ public class VideoController {
 		Video v = svc.addVisualizzazione(videoId);
 		return new ResponseEntity<Video>(v, HttpStatus.OK);
 	}
+	
+	@GetMapping("/{videoId}/visualizzazioni")
+	public Long getVisualizzazioni(@PathVariable Long videoId) {
+		Video video = svc.getVideoById(videoId);
+		return video.getVisualizzazioni();
+	}
 }
 
     

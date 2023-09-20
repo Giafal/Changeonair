@@ -98,4 +98,14 @@ export class VideoService {
       headers: this.headers,
     });
   }
+
+  getLikeCount(videoId: number): Observable<number> {
+    const url = `http://localhost:8080/api/likes/${videoId}/likeCount`;
+    return this.http.get<number>(url);
+  }
+
+  getVisualizzazioni(videoId: number): Observable<number> {
+    const url = `${this.apiUrl}/${videoId}/visualizzazioni`;
+    return this.http.get<number>(url);
+  }
 }
