@@ -52,7 +52,7 @@ export class VideoService {
       'Bearer ' + this.getToken()
     );
     return this.http.get<Commento[]>(
-      `http://localhost:8080/commenti/getCommenti/${videoId}`,
+      `http://localhost:8080/api/commenti/getCommenti/${videoId}`,
       {
         headers: this.headers,
       }
@@ -64,7 +64,7 @@ export class VideoService {
       'Authorization',
       'Bearer ' + this.getToken()
     );
-    return this.http.post(`http://localhost:8080/commenti/crea`, data, {
+    return this.http.post(`http://localhost:8080/api/commenti/crea`, data, {
       headers: this.headers,
     });
   }

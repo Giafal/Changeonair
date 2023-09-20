@@ -16,6 +16,8 @@ export class UploadComponent {
     descrizione: '',
     organizzazione: '',
   };
+
+  error: undefined | string;
   selectedFile: File | null = null;
 
   constructor(private svc: UploadService, private router: Router) {}
@@ -25,7 +27,12 @@ export class UploadComponent {
   }
 
   onSubmit() {
-    if (this.selectedFile) {
+    if (
+      this.selectedFile &&
+      this.form.value.nome.trim() !== '' &&
+      this.form.value.descrizione.trim() !== '' &&
+      this.form.value.organizzazione.trim() !== ''
+    ) {
       const formData = new FormData();
       formData.append('file', this.selectedFile);
       formData.append('nome', this.video.nome);
@@ -35,13 +42,17 @@ export class UploadComponent {
       this.svc.creaVideo(formData).subscribe(
         (response) => {
           console.log('File caricato con successo:', response);
-          alert('File caricato con successo');
+          alert('Video caricato con successo');
           this.router.navigate(['']);
+          this.error = undefined;
         },
         (error) => {
           console.error('Errore durante il caricamento del file:', error);
+          this.error = error.error.message;
         }
       );
+    } else {
+      this.error = 'Devi compilare tutti i campi';
     }
   }
 }

@@ -14,6 +14,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { UploadComponent } from './pages/upload/upload.component';
 import { DetailComponent } from './pages/detail/detail.component';
 import { TerminiComponent } from './components/termini/termini.component';
+import { AboutComponent } from './pages/about/about.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { TerminiComponent } from './components/termini/termini.component';
     ProfileComponent,
     UploadComponent,
     DetailComponent,
-    TerminiComponent
+    TerminiComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,

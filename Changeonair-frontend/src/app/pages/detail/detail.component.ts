@@ -58,12 +58,6 @@ export class DetailComponent implements OnInit {
     });
   }
 
-  // loadVideoDetails() {
-  //   this.videoService.getVideoById(this.videoId).subscribe((data) => {
-  //     this.video = data;
-  //   });
-  // }
-
   loadVideoDetails() {
     this.videoService.getVideoById(this.videoId).subscribe((data) => {
       this.video = data;

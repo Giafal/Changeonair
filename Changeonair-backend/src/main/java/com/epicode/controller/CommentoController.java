@@ -27,7 +27,7 @@ import com.epicode.services.VideoService;
 import jakarta.transaction.Transactional;
 
 @RestController
-@RequestMapping("/commenti")
+@RequestMapping("/api/commenti")
 @CrossOrigin(origins = "*")
 public class CommentoController {
 	
