@@ -1,8 +1,10 @@
 <video [src]="video.url" controls (play)="incrementaVisualizzazioni()"></video>
 <h3>{{ video.nome }}</h3>
-<p>
-  <strong>{{ video.username }}</strong>
-</p>
+<a [routerLink]="['/userdetail', video.username]">
+  <p>
+    <strong>{{ video.username }}</strong>
+  </p>
+</a>
 
 <p>
   Organizzazione sostenuta: <strong>{{ video.organizzazione }}</strong>

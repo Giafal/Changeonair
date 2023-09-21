@@ -1,7 +1,4 @@
-<div class="searchbar">
-  <input [(ngModel)]="nome" id="searchbar" placeholder="Cerca video" />
-  <button (click)="searchVideos(nome)">Cerca</button>
-</div>
+<h1>Ecco i video caricati da {{ username }}</h1>
 
 <div class="grid">
   <div *ngFor="let video of videos">

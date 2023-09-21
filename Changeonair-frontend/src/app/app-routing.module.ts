@@ -9,6 +9,7 @@ import { UploadComponent } from './pages/upload/upload.component';
 import { DetailComponent } from './pages/detail/detail.component';
 import { TerminiComponent } from './components/termini/termini.component';
 import { AboutComponent } from './pages/about/about.component';
+import { UserdetailComponent } from './pages/userdetail/userdetail.component';
 
 const routes: Routes = [
   { path: '', component: HomepageComponent },
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'detail/:id', component: DetailComponent },
   { path: 'termini', component: TerminiComponent },
   { path: 'about', component: AboutComponent },
+  { path: 'userdetail/:username', component: UserdetailComponent },
 ];
 
 @NgModule({
