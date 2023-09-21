@@ -6,3 +6,9 @@ nav {
   position: sticky;
   top: 0;
 }
+
+@media (max-width: 992px) {
+  .bottone {
+    margin-top: 10px;
+  }
+}
