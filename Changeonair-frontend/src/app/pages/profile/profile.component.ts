@@ -55,7 +55,7 @@ export class ProfileComponent implements OnInit {
     this.videoSvc.deleteVideo(id).subscribe(
       () => {
         this.videos = this.videos.filter((video) => video.id !== id);
-        console.log('Video cancellato con successo!');
+        alert('Video cancellato con successo!');
       },
       (error) => {
         this.videos = this.videos.filter((video) => video.id !== id);
@@ -63,6 +63,7 @@ export class ProfileComponent implements OnInit {
           'Si è verificato un errore durante la cancellazione del video:',
           error
         );
+        alert('Video cancellato con successo!');
       }
     );
   }
