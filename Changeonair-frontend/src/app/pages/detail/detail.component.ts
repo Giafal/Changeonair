@@ -172,4 +172,44 @@ export class DetailComponent implements OnInit {
       }
     );
   }
+
+  generateFacebookShareLink(): string {
+    const videoUrl = encodeURIComponent(this.video.url!);
+    return `https://www.facebook.com/sharer/sharer.php?u=${videoUrl}`;
+  }
+
+  shareOnFacebook(): void {
+    const facebookLink = this.generateFacebookShareLink();
+    window.open(facebookLink, '_blank');
+  }
+
+  generateWhatsAppShareLink(): string {
+    const videoUrl = encodeURIComponent(this.video.url!);
+    return `whatsapp://send?text=${videoUrl}`;
+  }
+
+  shareOnWhatsapp(): void {
+    const whatsappLink = this.generateWhatsAppShareLink();
+    window.open(whatsappLink, '_blank');
+  }
+
+  generateTwitterShareLink(): string {
+    const videoUrl = encodeURIComponent(this.video.url!);
+    return `https://twitter.com/intent/tweet?url=${videoUrl}`;
+  }
+
+  shareOnTwitter(): void {
+    const twitterLink = this.generateTwitterShareLink();
+    window.open(twitterLink, '_blank');
+  }
+
+  generateLinkedInShareLink(): string {
+    const videoUrl = encodeURIComponent(this.video.url!);
+    return `https://www.linkedin.com/shareArticle?url=${videoUrl}`;
+  }
+
+  shareOnLinkedIn(): void {
+    const linkedInLink = this.generateLinkedInShareLink();
+    window.open(linkedInLink, '_blank');
+  }
 }
