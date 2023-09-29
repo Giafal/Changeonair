@@ -8,3 +8,9 @@ img {
 a {
   text-decoration: none;
 }
+
+@media (max-width: 992px) {
+  img {
+    height: auto;
+  }
+}
