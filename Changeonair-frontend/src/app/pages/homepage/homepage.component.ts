@@ -19,13 +19,8 @@ export class HomepageComponent implements OnInit {
     this.getVideos();
   }
 
-  // getVideos(): void {
-  //   this.svc.getVideos().subscribe((videos) => (this.videos = videos));
-  // }
-
   getVideos(): void {
     this.svc.getVideos().subscribe((videos) => {
-      // Per ogni video, otteni lo username dell'utente
       console.log(videos);
       const requests = videos.map((video) =>
         this.svc.getUsername(video.utente!).pipe(
@@ -37,22 +32,11 @@ export class HomepageComponent implements OnInit {
         )
       );
 
-      // Usa forkJoin per attendere tutte le richieste
       forkJoin(requests).subscribe((videosWithUsername) => {
         this.videos = videosWithUsername;
       });
     });
   }
-
-  // searchVideos(nome: string): void {
-  //   nome = this.nome;
-  //   forkJoin([
-  //     this.svc.getVideosByName(nome),
-  //     this.svc.getVideosByUsername(nome),
-  //   ]).subscribe(([videosByName, videosByUsername]) => {
-  //     this.videos = [...videosByName, ...videosByUsername];
-  //   });
-  // }
 
   searchVideos(nome: string): void {
     nome = this.nome;
